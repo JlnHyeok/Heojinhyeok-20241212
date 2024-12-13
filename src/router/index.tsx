@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import { TimeDeal, BrandDeal } from "@/pages";
 import { Suspense } from "react";
+import { Loading } from "@/components/shared/Loading";
 
 export const webPath = {
   timeDeal: () => "/deals/time-deal",
@@ -23,13 +24,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 const Root = () => {
   return (
     <MainLayout>
-      <Suspense
-        fallback={
-          <div className="h-full w-full flex items-center justify-center">
-            로딩중
-          </div>
-        }
-      >
+      <Suspense fallback={<Loading />}>
         <Outlet />
       </Suspense>
       <ScrollRestoration />
