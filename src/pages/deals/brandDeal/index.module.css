@@ -1,0 +1,86 @@
+.brand_deal_page_main {
+  padding: 10px 0;
+}
+
+.brand_deal_page_card {
+  display: flex;
+  padding: 10px 16px;
+  gap: 10px;
+}
+
+.card_img {
+  width: 141px;
+  height: 141px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: var(--img-border-width) solid var(--img-border-color);
+}
+
+.brand_deal_page_card_desc_wrap {
+  width: 100%;
+  margin: auto;
+  margin-top: 4px;
+  position: relative;
+}
+
+.embla__slide__title {
+  width: 100%;
+  padding-top: 0px;
+  font-size: 16px;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+progress {
+  appearance: none;
+  width: 100%;
+}
+
+progress::-webkit-progress-bar {
+  background-color: #ffa98e;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+progress::-webkit-progress-value {
+  background-color: #ff6231;
+  border-radius: 20px;
+  transition: width 1s ease-in-out; /* 애니메이션 추가 */
+}
+
+progress::-moz-progress-bar {
+  background-color: #ff6231;
+  border-radius: 20px;
+  transition: width 1s ease-in-out; /* 애니메이션 추가 */
+}
+
+.progress_text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--contrast-font-color);
+}
+
+.price_wrap {
+  margin-top: 12px;
+  font-weight: bold;
+  color: var(--highlight-font-color);
+}
+
+.discount_price {
+  margin-left: 4px;
+}
+
+.sub_text {
+  font-size: 12px;
+  font-weight: 500;
+  color: #bcbdc3;
+}

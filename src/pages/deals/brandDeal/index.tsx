@@ -1,10 +1,14 @@
-import { Header } from "@/components";
+import { ErrorBoundary, GlobalFallback, Header } from "@/components";
+import styles from "./index.module.css";
+import { BrandDealContents } from "@/components/feature/brandDeal/BrandDealContents";
 
+// BrandDeal 컴포넌트
 const BrandDeal = () => {
   return (
-    <div>
-      <Header title="브랜드딜" isBackButtonVisible={true} />
-    </div>
+    <ErrorBoundary fallback={GlobalFallback()}>
+      <Header title="오늘의 브랜드딜" isBackButtonVisible={true} />
+      <BrandDealContents styles={styles} />
+    </ErrorBoundary>
   );
 };
 
