@@ -1,0 +1,90 @@
+.brand_deal {
+  /* background-color: inherit; */
+  height: 309px;
+}
+
+.brand_deal_title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 16px 12px 16px;
+  font-size: 20px;
+  height: 57px;
+  font-weight: bold;
+}
+
+.brand_deal_all_button {
+  font-size: 14px;
+  color: var(--sub-font-color);
+}
+
+.brand_deal_main {
+  padding: 12px 16px;
+}
+
+.embla {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+  height: 227px;
+}
+
+.embla__slide {
+  flex: 0 0 120px;
+  min-width: 0;
+  margin-right: 12px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.card_img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: var(--img-border-width) solid var(--img-border-color);
+}
+
+.embla__slide_desc_wrap {
+  width: 120px;
+  height: 86px;
+  margin: auto;
+}
+
+.remaining_time {
+  background-color: var(--highlight-background-color);
+  color: var(--highlight-font-color);
+  padding: 2px 4px;
+  height: 22px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+.embla__slide__title {
+  padding-top: 6px;
+  font-size: 14px;
+  height: 40px;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.price_wrap {
+  margin-top: 2px;
+  font-weight: bold;
+}
+
+.discount_rate {
+  color: var(--highlight-font-color);
+}
+
+.discount_price {
+  margin-left: 4px;
+}
