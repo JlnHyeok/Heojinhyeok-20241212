@@ -1,0 +1,10 @@
+* {
+  --lure-background-color: #ff6231;
+  --contrast-font-color: white;
+  --normal-font-color: black;
+  --sub-font-color: #9c9da4;
+  --highlight-font-color: #f8323e;
+  --highlight-background-color: #ffedee;
+  --img-border-color: #eeeff3;
+  --img-border-width: 1px;
+}
