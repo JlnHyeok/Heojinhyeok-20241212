@@ -1,12 +1,43 @@
+import { useEffect, useRef, useState } from "react";
 import { TabHeader } from "./TabHeader";
 import { Title, Card, InfiniteScrollLoader } from "@/components";
-import { getCurrentTime } from "@/utils/date";
 import { useVisibleItems } from "@/hooks/custom/useVisibleItems";
 import { useInfiniteScroll } from "@/hooks/custom/useInfiniteScroll";
 import { useInfiniteTimeDeals } from "@/hooks/queries/deal/useTimeDeal";
 import { IInfinityTimeDealsResponse } from "@/types/deal/timeDeal";
-import { useEffect, useRef, useState } from "react";
 import styles from "./TimeDealSection.module.css";
+import { getCurrentTime } from "@/utils/date";
+
+/**
+ * 현재 시간을 주기적으로 업데이트하는 커스텀 훅
+ * @param setCurrentHour 상태 업데이트 함수
+ */
+const useCurrentTimeUpdater = (
+  setCurrentHour: React.Dispatch<React.SetStateAction<number>>
+) => {
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const { hour } = getCurrentTime();
+      setCurrentHour(hour);
+    }, 1000);
+
+    return () => clearInterval(interval); // 정리 함수
+  }, [setCurrentHour]);
+};
+
+/**
+ * 현재 시간에 따라 활성 탭을 동기화하는 커스텀 훅
+ * @param currentHour 현재 시간
+ * @param setActiveTab 활성 탭 상태 업데이트 함수
+ */
+const useActiveTabSync = (
+  currentHour: number,
+  setActiveTab: React.Dispatch<React.SetStateAction<number>>
+) => {
+  useEffect(() => {
+    setActiveTab(currentHour);
+  }, [currentHour, setActiveTab]);
+};
 
 export const TimeDealSection = () => {
   const { hour: initialHour } = getCurrentTime();
@@ -15,7 +46,6 @@ export const TimeDealSection = () => {
   const observerRef = useRef<HTMLDivElement | null>(null);
   const isTimeForTabs = initialHour >= 7 && initialHour < 22;
 
-  // 무한 스크롤을 위한 useInfiniteTimeDeals 훅
   const {
     data: timeDeals,
     fetchNextPage,
@@ -25,41 +55,34 @@ export const TimeDealSection = () => {
     params: { page: 1, time: activeTab === currentHour ? "current" : "next" },
   });
 
-  // 현재 보여지는 아이템들을 관리하는 useVisibleItems 훅
   const visibleItems = useVisibleItems(
     timeDeals as unknown as IInfinityTimeDealsResponse
   );
 
-  // 무한 스크롤을 위한 useInfiniteScroll 훅
+  // 커스텀 훅 사용
+  useCurrentTimeUpdater(setCurrentHour);
+  useActiveTabSync(currentHour, setActiveTab);
   useInfiniteScroll(observerRef, hasNextPage, fetchNextPage);
 
-  // 탭 클릭 시 activeTab을 업데이트하고 timeDealContainer에 fade Effect 적용
+  // 탭 클릭 핸들러
   const handleTabClick = (tab: number) => {
     setActiveTab(tab);
     const container = document.getElementById("timeDealContainer");
-    container?.classList.add(styles.fade);
-    setTimeout(() => container?.classList.remove(styles.fade), 500);
+    if (container) {
+      container.classList.add(styles.fade);
+      setTimeout(() => container.classList.remove(styles.fade), 500);
+    }
   };
-
-  // 매 초마다 현재 시간을 체크하여 currentHour를 업데이트
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const { hour } = getCurrentTime();
-      setCurrentHour(hour);
-    }, 1000);
-
-    return () => clearInterval(interval); // Cleanup on unmount
-  }, []);
 
   return (
     <section className={styles.time_deal}>
       {!isTimeForTabs ? (
         <Title
-          caption={`${
-            currentHour >= 22
+          caption={
+            currentHour === 22
               ? "11시에 끝나는 오늘의 마지막 타임특가!"
               : "7시에 시작되는 오늘의 타임특가!"
-          }`}
+          }
           className={styles.time_deal_title_before_open}
         />
       ) : (
@@ -80,7 +103,9 @@ export const TimeDealSection = () => {
             title={item.title}
             discountRate={item.discountRate}
             discountedPrice={item.discountedPrice}
-            isLocked={isTimeForTabs ? currentHour !== activeTab : true}
+            isLocked={
+              isTimeForTabs ? currentHour !== activeTab : currentHour !== 22
+            }
             isTimeDeal={true}
             originalPrice={item.originalPrice}
             styles={styles}
