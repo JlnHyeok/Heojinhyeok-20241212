@@ -13,7 +13,7 @@ export const TimeDealSection = () => {
   const [currentHour, setCurrentHour] = useState(initialHour);
   const [activeTab, setActiveTab] = useState(initialHour);
   const observerRef = useRef<HTMLDivElement | null>(null);
-  const isTimeForTabs = initialHour >= 7 && initialHour < 23;
+  const isTimeForTabs = initialHour >= 7 && initialHour < 22;
 
   // 무한 스크롤을 위한 useInfiniteTimeDeals 훅
   const {
@@ -55,7 +55,11 @@ export const TimeDealSection = () => {
     <section className={styles.time_deal}>
       {!isTimeForTabs ? (
         <Title
-          caption="7시에 시작되는 오늘의 타임특가!"
+          caption={`${
+            currentHour >= 22
+              ? "11시에 끝나는 오늘의 마지막 타임특가!"
+              : "7시에 시작되는 오늘의 타임특가!"
+          }`}
           className={styles.time_deal_title_before_open}
         />
       ) : (
@@ -77,6 +81,7 @@ export const TimeDealSection = () => {
             discountRate={item.discountRate}
             discountedPrice={item.discountedPrice}
             isLocked={isTimeForTabs ? currentHour !== activeTab : true}
+            isTimeDeal={true}
             originalPrice={item.originalPrice}
             styles={styles}
           />
